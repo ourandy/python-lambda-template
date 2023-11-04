@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - echo "Installing requirements from pip..."
+      - pip install -r requirements.txt -t ./build/
+
+  pre_build:
+    commands:
+      - echo "[+] Running unit tests..."
+      - python -m unittest discover -v
+
+  build:
+    commands:
+      - echo "Zipping up the project..."
+      - zip -r artifact.zip . -x "*.git*"
+
+artifacts:
+  files:
+    - artifact.zip
+  discard-paths: yes
